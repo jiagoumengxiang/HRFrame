@@ -18,7 +18,7 @@
         };
 
         STStore.HRFrameConfig = {
-
+            extension:".html",
             async:true,
             splitchar:/\./g,
             path:"app"
@@ -32,6 +32,7 @@
             if(typeof(_fn)=="undefined"){
                 var success = $f("LoadFN",argus[0],false);
             }
+            _fn=FNStore[argus[0]];
             if(_fn==undefined){
                 console.log(argus[0]+"看起来加载失败了呢。");
                 return undefined;
@@ -76,20 +77,50 @@
         };
 
 
-
-
-
-
-
-
     };
     window.$F = window.$f = window.HRFrame = HRFrame();
 
     //从远端读取库文件
-    $f("df","LoadFN",function LoadFile(_fileName,_async){
+    $f("df","LoadFN",function(_fileName,_async){
         var httpReq = new XMLHttpRequest();
         httpReq.open("GET",this.HRFrameConfig.path+"/"+_fileName.replace(this.HRFrameConfig.splitchar,"/")+".js?time="+new Date().getMilliseconds(),_async);
-        eval(httpReq.responseText + "\n\n //# sourceURL=" + _fileName + ".js");
+        if(!_async){
+            httpReq.send();
+            eval(httpReq.responseText + "\n\n //# sourceURL=" + _fileName + ".js");
+        }else{
+            httpReq.onreadystatechange=function(){
+                if (httpReq.readyState==4 && httpReq.status==200){
+                    eval(httpReq.responseText + "\n\n //# sourceURL=" + _fileName + ".js");
+                }
+            };
+            httpReq.send();
+        }
         return true;
+    });
+
+    $f("df","RendPage",function(_data,_pageurl,_paramHandler,_responseHandler,_combineHandler){
+        $.ajax({
+            url:this.HRFrameConfig.path+"/"+_pageurl.replace(this.HRFrameConfig.splitchar,"/")+this.HRFrameConfig.extension,
+            data:null,
+            datatype:"text",
+            success:function(page){
+                var param = $f(_paramHandler,_data);
+                if(param==undefined){
+                    return;
+                }
+                $.ajax({
+                    url:param.url,
+                    data:param.data,
+                    success:function(data2){
+                        if(data2==undefined){
+                            return;
+                        }
+                        var responseData=$f(_responseHandler,data2,param);
+                        $f(_combineHandler,page,responseData,param);
+                    }
+                });
+            }
+
+        });
     });
 })(window); 

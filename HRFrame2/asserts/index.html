@@ -12,73 +12,79 @@
 
     <!-- Bootstrap core CSS -->
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-  </head>
+    <script src="HRFrame/template.js"></script>
+</head>
 
-  <body>
+<body>
 
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#">little-bee</a>
-            </div>
+            </button>
+            <a class="navbar-brand" href="#">little-bee</a>
+        </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav">
-                <li><a href="#" onclick="RenderPage('app.tasks.tasklist','app-context');">我的任务</a></li>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="#" onclick="RenderPage('app-context');">我的任务</a></li>
                 <li><a href="#">我的指派</a></li>
-              </ul>
-              <form class="navbar-form navbar-left" role="search">
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Search anywhere...">
+                    <input type="text" class="form-control" placeholder="Search anywhere...">
                 </div>
                 <button type="submit" class="btn btn-default">XD</button>
-              </form>
-              <ul class="nav navbar-nav navbar-right">
+            </form>
+            <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">消息</a></li>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">我<span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">项目列表</a></li>
-                    <li><a href="#">个人信息</a></li>
-                    <li><a href="#">签到</a></li>
-                    <li><a href="#">LOGIN OUT</a></li>
-                  </ul>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">我<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">项目列表</a></li>
+                        <li><a href="#">个人信息</a></li>
+                        <li><a href="#">签到</a></li>
+                        <li><a href="#">LOGIN OUT</a></li>
+                    </ul>
                 </li>
-              </ul>
-            </div><!-- /.navbar-collapse -->
-          </div><!-- /.container-fluid -->
-        </nav>
-      </div>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+</div>
 
-    <div class="container-fluid">
-     
-    </div>
+<div id="app-context" class="container-fluid">
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="HRFrame/hrframe-2.0.js"></script>
-    <script>
-      $f({"path":"app"});
-      console.log($f("test.fnA"));
-      console.log("1");
-      $(function(){
+</div>
+
+<!-- Bootstrap core JavaScript
+     ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="HRFrame/hrframe-2.0.js"></script>
+<script>
+    $f({"path":"app"});
+    console.log($f("test.fnA"));
+    console.log("1");
+    $(function(){
         console.log("2");
-        console.log($f("test.fnA",0));
-      });
-      function RenderPage(_fn,_target){
-      	$f("render",_fn,_target);
-      }
-    </script>
-  </body>
+    });
+    function RenderPage(_target){
+        //1.获取页面
+        //2.整理参数
+        //3.处理返回值
+        //4.渲染界面
+        //           初始参数  页面地址              参数处理             返回值处理           模板合成
+        $f("RendPage",{target:_target},"tasks.task.task","tasks.task.param","tasks.task.response","tasks.task.combine");
+
+    }
+</script>
+</body>
 </html>
