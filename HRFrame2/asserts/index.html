@@ -33,7 +33,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#" onclick="RenderPage('app-context');">我的任务</a></li>
+                <li><a href="#" onclick="RenderPage('tasklist','app-context');">我的任务</a></li>
                 <li><a href="#">我的指派</a></li>
             </ul>
             <form class="navbar-form navbar-left" role="search">
@@ -76,14 +76,13 @@
     $(function(){
         console.log("2");
     });
-    function RenderPage(_target){
+    function RenderPage(_fun,_target){
         //1.获取页面
         //2.整理参数
         //3.处理返回值
         //4.渲染界面
         //           初始参数  页面地址              参数处理             返回值处理           模板合成
-        $f("RendPage",{target:_target},"tasks.task.task","tasks.task.param","tasks.task.response","tasks.task.combine");
-
+        $f("RendPage",{target:_target},"tasks."+_fun+"."+_fun,"tasks."+_fun+".param","tasks."+_fun+".response","tasks."+_fun+".combine");
     }
 </script>
 </body>

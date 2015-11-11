@@ -7,7 +7,10 @@ app.get('/', function (req, res) {
 });
 app.get("/hello",function(req,res){
 	res.send("aaa");
-})
+});
+app.get("/tasklist",function(req,res){
+	res.send('{"tasklist":[{"name":"aaa","time":123},{"name":"bbb","time":234}]}');
+});
 
 var server = app.listen(3000, function () {
 	var host = server.address().address;
