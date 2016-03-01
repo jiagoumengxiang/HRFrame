@@ -119,7 +119,7 @@
                 }
 
                 if(HRFrameConfig.frontmode){
-                    var responseData=$f(_responseHandler,{},param);
+                    var responseData=$f(_responseHandler+"_json",{},param);
                     $f(_combineHandler,page,responseData,param);
                 }else{
                     $.ajax({

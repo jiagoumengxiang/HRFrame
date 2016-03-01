@@ -1,15 +1,21 @@
 var express = require('express');
+var http=require('http');
+var querystring=require('querystring');
 var app = express();
 
 app.use(express.static('asserts'));
-app.get('/', function (req, res) {
-	res.send('Hello World!');
+app.get("/tasks",function(_req,_res){
+	_res.send('{"tasklist":[{"name":"aaa","time":111},{"name":"bbb","time":222}]}');
 });
-app.get("/hello",function(req,res){
-	res.send("aaa");
-});
-app.get("/tasklist",function(req,res){
-	res.send('{"tasklist":[{"name":"aaa","time":123},{"name":"bbb","time":234}]}');
+app.get('/aa', function (req, res) {
+	var options={};
+	options.path="/view/xjgl/AjaxHandler.ashx?lx=GetXjlxList";
+	options.host="172.16.251.232";
+	options.port="8001";
+	http.request(options,function(data){
+		console.log(data);
+		req.send(data);
+	});	
 });
 
 var server = app.listen(3000, function () {
