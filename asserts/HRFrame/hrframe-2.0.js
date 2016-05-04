@@ -88,6 +88,7 @@
     window.$F = window.$f = window.HRFrame = HRFrame();
 
     //从远端读取库文件
+
     $f("df","LoadFN",function(_fileName,_async){
         var httpReq = new XMLHttpRequest();
         httpReq.open("GET",this.HRFrameConfig.path+"/"+_fileName.replace(this.HRFrameConfig.splitchar,"/")+".js?time="+new Date().getMilliseconds(),_async);
@@ -134,11 +135,16 @@
                         }
                     });
                 }
-
-
             }
-
         });
+    });
+
+    $f("df","Render",function(_data,_dir){
+        $f("RendPage",_data,_dir+".page",_dir+".request",_dir+".response",_dir+".combine");
+    });
+
+    $f("df","Refresher",function(_data,_dir){
+        $f("RendPage",_data,_dir+".page",_dir+".request",_dir+".response",_dir+".refresh");
     });
 
     $f("df","SendData",function(_data,_reqFn,_respFn){
@@ -163,4 +169,53 @@
             });
         }
     });
-})(window); 
+
+    $f("df","TPPL",function(tpl,data){
+        /**
+         * tppl.js 极致性能的 JS 模板引擎
+         * Github：https://github.com/jojoin/tppl
+         * 作者：杨捷
+         * 邮箱：yangjie@jojoin.com
+         *
+         * @param tpl {String}    模板字符串
+         * @param data {Object}   模板数据（不传或为null时返回渲染方法）
+         *
+         * @return  {String}    渲染结果
+         * @return  {Function}  渲染方法
+         *
+         * 增加undefined判断
+         *
+         */
+            var fn =  function(d) {
+                var i, k = [], v = [];
+                for (i in d) {
+                    k.push(i);
+                    v.push(d[i]);
+                };
+                return (new Function(k, fn.$)).apply(d, v);
+            };
+            if(!fn.$){
+                var tpls = tpl.split('[:');
+                fn.$ = "var $empty=''; var $reg = RegExp(/object|undefined|function/i); console.log($reg.test(typeof(type))?'111':type); var $=''";
+                for(var t in tpls){
+                    var p = tpls[t].split(':]');
+                    if(t!=0){
+                        fn.$ += '='==p[0].charAt(0)
+                            ? "+($reg.test(typeof("+p[0].substr(1)+"))?$empty:"+p[0].substr(1)+")"
+                            : ";"+p[0].replace(/\r\n/g, '')+"$=$"
+                    }
+                    // 支持 <pre> 和 [::] 包裹的 js 代码
+                    fn.$ += "+'"+p[p.length-1].replace(/\'/g,"\\'").replace(/\r\n/g, '\\n').replace(/\n/g, '\\n').replace(/\r/g, '\\n')+"'";
+                }
+                fn.$ += ";return $;";
+                // log(fn.$);
+            }
+            return data ? fn(data) : fn;
+    });
+    $f("df","set",function(_key,_data){
+        this;
+    });
+    $f("df","get",function(_key){
+        this;
+    });
+})(window);

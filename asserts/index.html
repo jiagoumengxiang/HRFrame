@@ -47,10 +47,10 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">我<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">项目列表</a></li>
-                        <li><a href="#">个人信息</a></li>
-                        <li><a href="#">签到</a></li>
-                        <li><a href="#">LOGIN OUT</a></li>
+                        <li><a href="#bbbb.awdf.asdf">项目列表</a></li>
+                        <li><a href="#aaaa.wf.asdf">个人信息</a></li>
+                        <li><a href="#ccc.wif.adkf">签到</a></li>
+                        <li><a href="#ddd.wdfl.asdf">LOGIN OUT</a></li>
                     </ul>
                 </li>
             </ul>
@@ -84,6 +84,17 @@
         //           初始参数  页面地址              参数处理             返回值处理           模板合成
         $f("RendPage",{target:_target},"tasks."+_fun+"."+_fun,"tasks."+_fun+".param","tasks."+_fun+".response","tasks."+_fun+".combine");
     }
+    $(function(){
+      window.onunload=function(e){
+        alert("<--");
+      };
+      window.onload=function(e){
+        console.log(e);
+      };
+      window.onhashchange=function(e){
+        console.log(e);
+      };
+    });
 </script>
 </body>
 </html>
