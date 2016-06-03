@@ -83,9 +83,6 @@ $f("df","map.controls.meature",function(map){
     helpTooltipElement.classList.add('hidden');
   });
 
-  var typeSelect = document.getElementById('type');
-  var geodesicCheckbox = document.getElementById('geodesic');
-
   var draw; // global so we can remove it later
 
 
@@ -96,7 +93,7 @@ $f("df","map.controls.meature",function(map){
   */
   var formatLength = function(line) {
     var length;
-    if (true) {
+    if (false) {
       var coordinates = line.getCoordinates();
       length = 0;
       var sourceProj = map.getView().getProjection();
@@ -127,7 +124,7 @@ $f("df","map.controls.meature",function(map){
   */
   var formatArea = function(polygon) {
     var area;
-    if (true) {
+    if (false) {
       var sourceProj = map.getView().getProjection();
       var geom = /** @type {ol.geom.Polygon} */(polygon.clone().transform(
         sourceProj, 'EPSG:4326'));
@@ -148,9 +145,9 @@ $f("df","map.controls.meature",function(map){
     };
 
     function addInteraction() {
-      var type = 'LineString';
+      var type = 'Polygon';
       draw = new ol.interaction.Draw({
-        source: source,
+        source: $f("get","meaturesource"),
         type: /** @type {ol.geom.GeometryType} */ (type),
         style: new ol.style.Style({
           fill: new ol.style.Fill({
@@ -203,7 +200,7 @@ $f("df","map.controls.meature",function(map){
 
       draw.on('drawend',
       function() {
-        measureTooltipElement.className = 'tooltip tooltip-static';
+        measureTooltipElement.className = 'tooltip-mm tooltip-static';
         measureTooltip.setOffset([0, -7]);
         // unset sketch
         sketch = null;
@@ -223,7 +220,7 @@ $f("df","map.controls.meature",function(map){
         helpTooltipElement.parentNode.removeChild(helpTooltipElement);
       }
       helpTooltipElement = document.createElement('div');
-      helpTooltipElement.className = 'tooltip hidden';
+      helpTooltipElement.className = 'tooltip-mm hidden';
       helpTooltip = new ol.Overlay({
         element: helpTooltipElement,
         offset: [15, 0],
@@ -241,7 +238,7 @@ $f("df","map.controls.meature",function(map){
         measureTooltipElement.parentNode.removeChild(measureTooltipElement);
       }
       measureTooltipElement = document.createElement('div');
-      measureTooltipElement.className = 'tooltip tooltip-measure';
+      measureTooltipElement.className = 'tooltip-mm tooltip-measure';
       measureTooltip = new ol.Overlay({
         element: measureTooltipElement,
         offset: [0, -15],

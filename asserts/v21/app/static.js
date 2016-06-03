@@ -4,6 +4,7 @@ $f("set","map",{});
 $f("set","geoserveraddr","http://172.16.248.108:8088/geoserver");
 //测距用图层
 $f("set","meatureslayer",{});
+$f("set","meaturesource",{});
 //地图中使用的图层
 $f("set","maplayers",[]);
 //弹出框

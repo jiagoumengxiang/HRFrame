@@ -1,6 +1,6 @@
 $f("df","map.layers.meatures",function(){
     var source = new ol.source.Vector({wrapX: false});
-
+    $f("set","meaturesource",source);
     var vector = new ol.layer.Vector({
         source: source,
         text:"base",

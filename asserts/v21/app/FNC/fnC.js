@@ -30,12 +30,12 @@ $f("df","FNC.fnC",function(){
   });
   map.getView().fit(bounds, map.getSize());
   map.addControl($f("map.controls.layersweitcher",$f("get","maplayers")));
-  $f("map.controls.meature",map);
-  map.on('singleclick',function(evt){
-    var coordinate = evt.coordinate;
-    document.getElementById("popup-content").innerHTML = '<p>You clicked here:</p><code>' + coordinate +
-    '</code>';
-    $f("get","popup").setPosition(coordinate);
-  });
   $f("set","map",map);
+  $f("map.controls.meature",map);
+  // map.on('singleclick',function(evt){
+  //   var coordinate = evt.coordinate;
+  //   document.getElementById("popup-content").innerHTML = '<p>You clicked here:</p><code>' + coordinate +
+  //   '</code>';
+  //   $f("get","popup").setPosition(coordinate);
+  // });
 });
