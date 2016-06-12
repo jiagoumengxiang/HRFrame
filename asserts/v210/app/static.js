@@ -1,0 +1,11 @@
+//地图对象
+$f("set","map",{});
+//地图服务器地址
+$f("set","geoserveraddr","http://172.16.248.108:8088/geoserver");
+//测距用图层
+$f("set","meatureslayer",{});
+$f("set","meaturesource",{});
+//地图中使用的图层
+$f("set","maplayers",[]);
+//弹出框
+$f("set","popup",{});

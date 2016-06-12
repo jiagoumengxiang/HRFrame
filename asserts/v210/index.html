@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+ <link rel="stylesheet" href="/openlayers/css/ol.css">
+ <link rel="stylesheet" href="/openlayers/css/ol3-popup.css">
+  <title>HRFrame21</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="well">
+            <p>
+              1. static.json 用来定义全局变量。防止变量乱放导致混乱的局面。<br/>
+              2. 大原则不要变，以文件夹为最小单元开发。<br/>
+              3. 旧版HRFrame 对于后退，及页面跳转支持极其难看，需要写Render方法，但是每个项目其实render方法都一样，
+              而且对于一个信息系统来说，大多数的功能在于get的跳转操作。配合模板引擎，一个简洁的get跳转功能对效率提升非常重要。
+              所以对于2.1版本HRFrame，要对跳转进行巨大的优化。
+            </p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <ul class="nav nav-pills nav-stacked">
+          <!-- 此处的简洁化跳转功能有两种实现，一种是隐藏式，只写第一层调用关系，第二种把链式调用写全。 -->
+          <li role="presentation" class="active"><a href="#f->FNA.fnA main-content">功能A</a></li>
+          <li role="presentation" class=""><a href="#f->RENDER FNB">功能B</a></li>
+          <li role="presentation" class=""><a href="#" onclick="$f('FNC.fnC',this)">功能C</a></li>
+        </ul>
+      </div>
+      <div id="main-content" style="width:100%;height:800px;" class="col-md-10">
+
+      </div>
+      <div id="popup" class="ol-popup">
+        <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+        <div id="popup-content"></div>
+      </div>
+    </div>
+</div>
+<!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="/openlayers/ol/ol.js"></script>
+  <script src="/HRFrame/hrframe-2.1.js"></script>
+  <script>
+  $f({"path":"app"});
+  $f("static");
+  </script>
+</body>
+</html>
