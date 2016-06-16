@@ -25,10 +25,15 @@
   ================================================== -->
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-  <script src="/HRFrame/hrframe-2.1.js"></script>
+  <script src="/HRFrame/hrframe-3.0.js"></script>
   <script>
-  $f({"path":"app"});
-  $f("game.static");
+  var say = $f("df","say",function(world){
+    return "\""+world+"\"";
+  });
+  say("hi");
+
+  var sayHi = $f("FNC.fnC","john");
+
   </script>
 </body>
 </html>
