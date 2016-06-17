@@ -11,24 +11,30 @@
 (function(window){
   var HRFrame = function(){
     var FNStore={};
+    var FNStoreOrigin={};
     var STStore={};
 
-    FNStore["df"]=function(_fnName,_fn){
-      FNStore[_fnName]=_fn;
-      // var argumentsLength=_fn.length;
-      // var argumentsArray=[];
-      // var rtnFn = function(){
-      //   var argu = Array.prototype.slice.call(arguments);
-      //   if(argumentsArray.length+argu.length<argumentsLength){
-      //     argumentsArray = argumentsArray.concat(argu);
-      //   }else{
-      //     var param =argumentsArray.concat(argu);
-      //     var rtn = FNStore[_fnName].apply(STStore,param);
-      //     return rtn;
-      //   }
-      // };
-      //FNStore[_fnName]=rtnFn;
-      //return rtnFn;
+    FNStoreOrigin["curry"]=FNStore["curry"]=function(_fnName){
+      var argumentsLength=FNStoreOrigin[_fnName].length;
+      var argumentsArray=[];
+      var rtnFn = function(){
+        var argu = Array.prototype.slice.call(arguments);
+        if(argumentsArray.length+argu.length<argumentsLength){
+          argumentsArray = argumentsArray.concat(argu);
+        }else{
+          var param =argumentsArray.concat(argu);
+          var rtn = FNStoreOrigin[_fnName].apply(STStore,param);
+          return rtn;
+        }
+      };
+      return rtnFn;
+    }
+
+    FNStoreOrigin["df"]=FNStore["df"]=function(_fnName,_fn){
+      FNStoreOrigin[_fnName]=_fn;
+      var rtnFn = FNStore["curry"](_fnName);
+      FNStore[_fnName]=rtnFn;
+      return rtnFn;
     };
 
     STStore.HRFrameConfig = {
@@ -41,36 +47,22 @@
 
 
     //调用函数
-    function CallFunction(){
+    var CallFunction = function(){
       var argus=Array.prototype.slice.call(arguments);
-      var _fn =FNStore[argus[0]];
+      var _fn =FNStoreOrigin[argus[0]];
       if(typeof(_fn)=="undefined"){
         var success = $f("LoadFN",argus[0],false);
+        _fn=FNStoreOrigin[argus[0]];
       }
-      _fn=FNStore[argus[0]];
       if(_fn==undefined){
         console.log(argus[0]+"看起来加载失败了呢。");
         return undefined;
       }else{
-
-        var argumentsLength=_fn.length;
-        var argumentsArray=[];
-        var rtnFn = function(){
-          var argu = Array.prototype.slice.call(arguments);
-          if(argumentsArray.length+argu.length<argumentsLength){
-            argumentsArray = argumentsArray.concat(argu);
-          }else{
-            var param =argumentsArray.concat(argu);
-            var rtn = FNStore[_fnName].apply(STStore,param);
-            return rtn;
-          }
-        };
-        //FNStore[_fnName]=rtnFn;
-        return rtnFn;
-
-//        return _fn.apply(STStore, argus.splice(1));
+        var rtnFn = FNStore["curry"](argus[0]);
+        var rtnVal = rtnFn.apply(STStore,argus.splice(1));
+        return rtnVal||rtnFn;
       }
-    }
+    };
 
     var HRFn = function() {
       var argus = Array.prototype.slice.call(arguments);
@@ -81,9 +73,12 @@
       if (argus.length == 1) {
         var argument = argus[0];
         if (typeof(argument) == "string") {
-          // 异步加载函数
-          $f("LoadFN", argument, true);
-          return true;
+          var _fn = FNStore[argus[0]];
+          if(_fn==undefined){
+          $f("LoadFN", argument, false);
+          }
+          _fn = FNStore[argus[0]];
+          return _fn;
         } else if (typeof(argument) == "object") {
           //配置框架
           if (argument.async != undefined && argument.async != null) {
